@@ -26,6 +26,9 @@ export const PlayerList: React.FC<PlayerListProps> = ({ players, currentTurnPlay
             {currentTurnPlayerId === player.id && <span className="turn-badge">Turn</span>}
             {winner === player.id && <span className="winner-badge">🏆 Winner!</span>}
             {!player.isConnected && <span className="disconnected-badge">Offline</span>}
+            {player.skipTurns && player.skipTurns > 0 && (
+              <span className="frozen-badge">❄️ {player.skipTurns}</span>
+            )}
           </div>
         ))}
       </div>

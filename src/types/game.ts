@@ -11,6 +11,16 @@ export interface Player {
   startPosition: Position;
   isConnected: boolean;
   isTurn: boolean;
+  skipTurns?: number; // Number of turns to skip (for freeze obstacle)
+}
+
+export type ObstacleType = 'reset' | 'freeze' | 'block';
+
+export interface Obstacle {
+  id: string;
+  type: ObstacleType;
+  position: Position;
+  lifespan?: number; // Turns before relocating
 }
 
 export interface GameState {
@@ -21,6 +31,8 @@ export interface GameState {
   boardSize: number;
   trophyPosition: Position;
   paths: Path[];
+  obstacles: Obstacle[];
+  obstacleRelocateCountdown: number; // Turns until obstacles relocate
   winner: string | null;
   status: 'waiting' | 'playing' | 'finished';
   maxPlayers: number;
