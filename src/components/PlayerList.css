@@ -52,7 +52,8 @@
 
 .turn-badge,
 .winner-badge,
-.disconnected-badge {
+.disconnected-badge,
+.frozen-badge {
   font-size: 12px;
   padding: 2px 8px;
   border-radius: 12px;
@@ -71,5 +72,10 @@
 
 .disconnected-badge {
   background-color: #f44336;
+  color: white;
+}
+
+.frozen-badge {
+  background-color: #2196F3;
   color: white;
 }

@@ -199,6 +199,24 @@ function App() {
                 </strong></p>
               )}
             </div>
+            
+            <div className="obstacle-info">
+              <h4>Obstacles ({gameState.obstacles?.length || 0})</h4>
+              <div className="obstacle-legend">
+                <div className="legend-item">
+                  <span>↩️</span> Reset to start
+                </div>
+                <div className="legend-item">
+                  <span>❄️</span> Freeze 2 turns
+                </div>
+                <div className="legend-item">
+                  <span>🚫</span> Blocked path
+                </div>
+              </div>
+              <p className="relocate-info">
+                Relocates in {gameState.obstacleRelocateCountdown} turns
+              </p>
+            </div>
           </div>
         </div>
         

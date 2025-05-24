@@ -9,7 +9,7 @@ interface GameBoardProps {
 }
 
 export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, currentPlayerId }) => {
-  const { boardSize, players, trophyPosition, paths } = gameState;
+  const { boardSize, players, trophyPosition, paths, obstacles = [] } = gameState;
   
   // Calculate cell size based on board size
   const cellSize = boardSize <= 20 ? 20 : boardSize <= 30 ? 15 : 12;
@@ -18,6 +18,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, cu
     const player = players.find(p => p.position.x === x && p.position.y === y);
     const isTrophy = x === trophyPosition.x && y === trophyPosition.y;
     const isStartPosition = players.some(p => p.startPosition.x === x && p.startPosition.y === y);
+    const obstacle = obstacles.find(o => o.position.x === x && o.position.y === y);
     
     const hasPath = currentPlayerId && paths.some(path => 
       path.playerId === currentPlayerId && (
@@ -31,7 +32,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, cu
       player && 'has-player',
       isTrophy && 'has-trophy',
       isStartPosition && 'is-start',
-      hasPath && 'has-path'
+      hasPath && 'has-path',
+      obstacle && `has-obstacle obstacle-${obstacle.type}`
     ].filter(Boolean).join(' ');
     
     return (
@@ -49,6 +51,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, cu
         {player && !isTrophy && (
           <div className="player-piece">
             {player.isTurn && <div className="turn-indicator" />}
+          </div>
+        )}
+        {obstacle && !player && !isTrophy && (
+          <div className="obstacle-icon">
+            {obstacle.type === 'reset' && '↩️'}
+            {obstacle.type === 'freeze' && '❄️'}
+            {obstacle.type === 'block' && '🚫'}
           </div>
         )}
       </div>
