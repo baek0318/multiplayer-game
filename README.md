@@ -116,3 +116,33 @@ A real-time multiplayer turn-based game where players compete to reach the troph
 - Responsive design for different screen sizes
 - Player disconnection handling
 - Visual indicators for game state (turns, frozen players, paths)
+
+## Deployment
+
+The game can be deployed using Firebase Hosting:
+
+```bash
+npm run deploy
+```
+
+For preview deployments:
+```bash
+npm run deploy:preview
+```
+
+## Environment Variables
+
+Create a `.env` file with your Firebase configuration:
+```
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_DATABASE_URL=your_database_url
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
+
+## License
+
+This project is open source and available under the MIT License.
