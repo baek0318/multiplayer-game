@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { GameBoard } from './components/GameBoard';
 import { GameControls } from './components/GameControls';
 import { PlayerList } from './components/PlayerList';
@@ -39,12 +39,12 @@ function App() {
     }
   }, [gameState?.id, playerId]);
 
-  const handleCreateRoom = async (playerName: string, maxPlayers: number) => {
+  const handleCreateRoom = async (playerName: string, maxPlayers: number, boardSize: number) => {
     setLoading(true);
     setError('');
     
     try {
-      const roomId = await gameService.createRoom(playerId, playerName, maxPlayers);
+      const roomId = await gameService.createRoom(playerId, playerName, maxPlayers, boardSize);
       console.log('Room created:', roomId);
       
       // Subscribe to the room immediately after creation
