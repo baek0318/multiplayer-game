@@ -91,3 +91,11 @@
 .submit-button:active {
   transform: scale(0.98);
 }
+
+.form-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}

@@ -35,6 +35,9 @@ export const WaitingRoom: React.FC<WaitingRoomProps> = ({ gameState, currentPlay
         <p className="player-count">
           Players: {gameState.players.length} / {gameState.maxPlayers}
         </p>
+        <p className="board-size">
+          Map Size: {gameState.boardSize}x{gameState.boardSize}
+        </p>
       </div>
 
       <div className="players-section">

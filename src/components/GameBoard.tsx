@@ -11,6 +11,9 @@ interface GameBoardProps {
 export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, currentPlayerId }) => {
   const { boardSize, players, trophyPosition, paths } = gameState;
   
+  // Calculate cell size based on board size
+  const cellSize = boardSize <= 20 ? 20 : boardSize <= 30 ? 15 : 12;
+  
   const renderCell = (x: number, y: number) => {
     const player = players.find(p => p.position.x === x && p.position.y === y);
     const isTrophy = x === trophyPosition.x && y === trophyPosition.y;
@@ -38,6 +41,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({ gameState, onCellClick, cu
         onClick={() => onCellClick?.({ x, y })}
         style={{
           backgroundColor: player ? player.color : undefined,
+          width: `${cellSize}px`,
+          height: `${cellSize}px`,
         }}
       >
         {isTrophy && '🏆'}

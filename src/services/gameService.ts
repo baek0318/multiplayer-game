@@ -2,14 +2,14 @@ import { database } from './firebase';
 import { ref, set, onValue, push, update, get, off, onDisconnect } from 'firebase/database';
 import { GameState, Player, Position, Direction } from '../types/game';
 
-const BOARD_SIZE = 40;
-const TROPHY_POSITION: Position = { x: 20, y: 20 };
-
 export const gameService = {
-  createRoom: async (hostId: string, hostName: string, maxPlayers: number): Promise<string> => {
+  createRoom: async (hostId: string, hostName: string, maxPlayers: number, boardSize: number = 30): Promise<string> => {
     const roomsRef = ref(database, 'rooms');
     const newRoomRef = push(roomsRef);
     const roomId = newRoomRef.key!;
+
+    const center = Math.floor(boardSize / 2);
+    const trophyPosition: Position = { x: center, y: center };
 
     const initialGameState: GameState = {
       id: roomId,
@@ -17,15 +17,15 @@ export const gameService = {
         id: hostId,
         name: hostName,
         color: getPlayerColor(0),
-        position: getStartPosition(0, maxPlayers),
-        startPosition: getStartPosition(0, maxPlayers),
+        position: getStartPosition(0, maxPlayers, boardSize),
+        startPosition: getStartPosition(0, maxPlayers, boardSize),
         isConnected: true,
         isTurn: false
       }],
       currentTurnPlayerId: null,
       turnOrder: [],
-      boardSize: BOARD_SIZE,
-      trophyPosition: TROPHY_POSITION,
+      boardSize: boardSize,
+      trophyPosition: trophyPosition,
       paths: [],
       winner: null,
       status: 'waiting',
@@ -63,8 +63,8 @@ export const gameService = {
         id: playerId,
         name: playerName,
         color: getPlayerColor(playerIndex),
-        position: getStartPosition(playerIndex, gameState.maxPlayers),
-        startPosition: getStartPosition(playerIndex, gameState.maxPlayers),
+        position: getStartPosition(playerIndex, gameState.maxPlayers, gameState.boardSize),
+        startPosition: getStartPosition(playerIndex, gameState.maxPlayers, gameState.boardSize),
         isConnected: true,
         isTurn: false
       };
@@ -96,7 +96,7 @@ export const gameService = {
       status: 'playing',
       turnOrder,
       currentTurnPlayerId: firstPlayerId,
-      paths: generatePaths(gameState.players, BOARD_SIZE, TROPHY_POSITION)
+      paths: generatePaths(gameState.players, gameState.boardSize, gameState.trophyPosition)
     });
   },
 
@@ -121,7 +121,7 @@ export const gameService = {
 
     const newPosition = getNewPosition(player.position, direction);
     
-    if (!isValidMove(player.position, newPosition, gameState.paths, playerId)) {
+    if (!isValidMove(player.position, newPosition, gameState.paths, playerId, gameState.boardSize)) {
       throw new Error('Invalid move');
     }
 
@@ -129,7 +129,7 @@ export const gameService = {
       p.id === playerId ? { ...p, position: newPosition } : p
     );
 
-    const isWinner = newPosition.x === TROPHY_POSITION.x && newPosition.y === TROPHY_POSITION.y;
+    const isWinner = newPosition.x === gameState.trophyPosition.x && newPosition.y === gameState.trophyPosition.y;
     
     if (isWinner) {
       await update(roomRef, {
@@ -145,7 +145,7 @@ export const gameService = {
       await update(roomRef, {
         players: updatedPlayers,
         currentTurnPlayerId: nextPlayerId,
-        paths: generatePaths(updatedPlayers, BOARD_SIZE, TROPHY_POSITION)
+        paths: generatePaths(updatedPlayers, gameState.boardSize, gameState.trophyPosition)
       });
     }
   },
@@ -171,15 +171,16 @@ function getPlayerColor(index: number): string {
   return colors[index % colors.length];
 }
 
-function getStartPosition(playerIndex: number, totalPlayers: number): Position {
+function getStartPosition(playerIndex: number, totalPlayers: number, boardSize: number): Position {
   const angleStep = (2 * Math.PI) / totalPlayers;
   const angle = playerIndex * angleStep;
-  const radius = 18;
+  const center = Math.floor(boardSize / 2);
+  const radius = Math.floor(boardSize * 0.45); // 45% of board size
   
-  const x = Math.round(20 + radius * Math.cos(angle));
-  const y = Math.round(20 + radius * Math.sin(angle));
+  const x = Math.round(center + radius * Math.cos(angle));
+  const y = Math.round(center + radius * Math.sin(angle));
   
-  return { x: Math.max(1, Math.min(39, x)), y: Math.max(1, Math.min(39, y)) };
+  return { x: Math.max(1, Math.min(boardSize - 1, x)), y: Math.max(1, Math.min(boardSize - 1, y)) };
 }
 
 function generatePaths(players: Player[], boardSize: number, trophyPosition: Position): any[] {
@@ -199,10 +200,20 @@ function generatePathForPlayer(start: Position, end: Position, boardSize: number
   const queue: Position[] = [start];
   visited.add(`${start.x},${start.y}`);
   
-  while (queue.length > 0) {
+  // Always ensure at least one move from starting position
+  const startNeighbors = getNeighbors(start, boardSize);
+  for (const neighbor of startNeighbors) {
+    const key = `${neighbor.x},${neighbor.y}`;
+    visited.add(key);
+    paths.push({ from: start, to: neighbor });
+    queue.push(neighbor);
+  }
+  
+  while (queue.length > 0 && paths.length < 100) { // Limit paths to prevent infinite loops
     const current = queue.shift()!;
     
-    if (Math.random() > 0.3) {
+    // Generate paths with some randomness but ensure connectivity
+    if (Math.random() > 0.2) { // Higher chance of generating paths
       const neighbors = getNeighbors(current, boardSize);
       
       for (const neighbor of neighbors) {
@@ -211,8 +222,11 @@ function generatePathForPlayer(start: Position, end: Position, boardSize: number
           visited.add(key);
           paths.push({ from: current, to: neighbor });
           
-          if (Math.abs(neighbor.x - end.x) + Math.abs(neighbor.y - end.y) < 
-              Math.abs(current.x - end.x) + Math.abs(current.y - end.y)) {
+          // Prioritize paths moving towards the trophy
+          const currentDistance = Math.abs(current.x - end.x) + Math.abs(current.y - end.y);
+          const neighborDistance = Math.abs(neighbor.x - end.x) + Math.abs(neighbor.y - end.y);
+          
+          if (neighborDistance < currentDistance || Math.random() > 0.5) {
             queue.push(neighbor);
           }
         }
@@ -250,9 +264,9 @@ function getNewPosition(currentPos: Position, direction: Direction): Position {
   }
 }
 
-function isValidMove(currentPos: Position, newPos: Position, paths: any[], playerId: string): boolean {
+function isValidMove(currentPos: Position, newPos: Position, paths: any[], playerId: string, boardSize: number): boolean {
   // Check if the new position is within board boundaries
-  if (newPos.x < 0 || newPos.x >= BOARD_SIZE || newPos.y < 0 || newPos.y >= BOARD_SIZE) {
+  if (newPos.x < 0 || newPos.x >= boardSize || newPos.y < 0 || newPos.y >= boardSize) {
     return false;
   }
   

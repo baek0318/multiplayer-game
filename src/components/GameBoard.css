@@ -10,8 +10,6 @@
 }
 
 .game-cell {
-  width: 15px;
-  height: 15px;
   border: 1px solid #ddd;
   cursor: pointer;
   position: relative;
