@@ -1,16 +1,20 @@
 # Multiplayer Trophy Game
 
-A real-time multiplayer turn-based game where players compete to reach the trophy first. Built with React, TypeScript, and Firebase.
+A real-time multiplayer turn-based game where players compete to reach the trophy first while navigating through obstacles and dynamic paths. Built with React, TypeScript, and Firebase.
 
 ## Game Features
 
-- 2-7 players can play together in real-time
-- 40x40 grid board with dynamic path generation
-- Turn-based movement system
-- Players start at corners forming an N-gon based on player count
-- Trophy in the center of the board
-- Paths change after each turn
-- Real-time synchronization using Firebase
+- **Multiplayer Support**: 2-7 players can play together in real-time
+- **Dynamic Board Sizes**: 
+  - 20x20 (2-4 players)
+  - 30x30 (5-6 players) 
+  - 40x40 (7 players)
+- **Turn-based Movement**: Players take turns moving one cell at a time
+- **Smart Starting Positions**: Players start at vertices of an N-gon based on player count
+- **Central Trophy**: The goal is located at the center of the board
+- **Dynamic Path System**: Paths regenerate after each turn, creating new routes
+- **Obstacle System**: Three types of obstacles that affect gameplay
+- **Real-time Synchronization**: Powered by Firebase Realtime Database
 
 ## Setup
 
@@ -46,23 +50,69 @@ A real-time multiplayer turn-based game where players compete to reach the troph
 
 ## How to Play
 
-1. Create a room or join an existing room with a Room ID
-2. Wait for other players to join (minimum 2 players)
-3. Host starts the game when ready
-4. Players take turns moving using arrow controls
-5. Follow the green paths to reach the trophy
-6. First player to reach the trophy wins!
+1. **Create or Join a Room**:
+   - Create a new room: Choose player count and map size
+   - Join existing room: Enter the Room ID shared by the host
+   
+2. **Game Setup**:
+   - Wait for other players (minimum 2 players required)
+   - Host can start the game when ready
+   - Players are positioned at equal distances from the center
+
+3. **Gameplay**:
+   - Take turns moving using arrow controls (↑ ↓ ← →)
+   - Follow the green highlighted paths
+   - Navigate around or through obstacles
+   - Race to reach the golden trophy in the center
+
+4. **Victory**: First player to reach the trophy wins!
 
 ## Game Rules
 
-- Players can only move on the generated paths (shown in green)
-- Paths regenerate after each turn
-- Players move one cell at a time
-- The game ends when a player reaches the trophy
+### Movement Rules
+- Players can only move on generated paths (highlighted in green)
+- One cell movement per turn
+- Cannot move through blocking obstacles
+- Paths regenerate after each player's turn
+
+### Obstacle Types
+- **↩️ Reset Obstacle (Orange)**: Sends you back to your starting position
+- **❄️ Freeze Obstacle (Blue)**: Freezes you for 2 turns
+- **🚫 Block Obstacle (Red)**: Cannot pass through, must go around
+
+### Obstacle Mechanics
+- Obstacles cover 12.5% of the map
+- They relocate every 3-7 turns randomly
+- Safe zones exist around starting positions and the trophy
+
+### Board Size Rules
+- **20x20**: Available for 2-4 players (50 obstacles)
+- **30x30**: Available for 2-7 players (112 obstacles)
+- **40x40**: Required for 7 players (200 obstacles)
+
+## Game Strategy Tips
+
+- **Plan Your Route**: Paths change every turn, so think ahead
+- **Use Obstacles Wisely**: Sometimes hitting a reset obstacle can be strategic
+- **Watch Frozen Players**: Take advantage when opponents are frozen
+- **Block Opponents**: Position yourself to force others into obstacles
+- **Center Control**: Try to maintain positions closer to the trophy
 
 ## Technologies Used
 
-- React + TypeScript
-- Firebase Realtime Database
-- Vite
-- CSS3 for styling
+- **Frontend**: React + TypeScript
+- **Real-time Backend**: Firebase Realtime Database
+- **Build Tool**: Vite
+- **Styling**: CSS3 with dynamic sizing
+- **State Management**: React Hooks + Firebase listeners
+
+## Features Overview
+
+- Room-based multiplayer system with unique Room IDs
+- Dynamic board sizing based on player count
+- Real-time player position synchronization
+- Turn management with skip-turn mechanics
+- Obstacle collision detection and effects
+- Responsive design for different screen sizes
+- Player disconnection handling
+- Visual indicators for game state (turns, frozen players, paths)
