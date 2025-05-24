@@ -1,0 +1,75 @@
+.player-list {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+.player-list h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.players {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  transition: all 0.2s ease;
+}
+
+.player-item.current-turn {
+  background-color: #e8f5e9;
+  border: 1px solid #4CAF50;
+}
+
+.player-item.winner {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+}
+
+.player-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.player-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.turn-badge,
+.winner-badge,
+.disconnected-badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.turn-badge {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.winner-badge {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.disconnected-badge {
+  background-color: #f44336;
+  color: white;
+}

@@ -1,0 +1,126 @@
+.waiting-room {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.waiting-room h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.room-info {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.room-id {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.room-id strong {
+  font-family: monospace;
+  background-color: #e0e0e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.player-count {
+  font-size: 16px;
+  color: #666;
+}
+
+.share-button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 10px 0;
+}
+
+.share-button:hover {
+  background-color: #1976D2;
+}
+
+.players-section h3 {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-waiting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+}
+
+.player-color-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.host-badge {
+  margin-left: auto;
+  background-color: #2196F3;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.host-controls {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.start-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.start-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.start-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.waiting-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-top: 30px;
+}
