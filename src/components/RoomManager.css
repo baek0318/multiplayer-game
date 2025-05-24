@@ -1,33 +1,65 @@
 .room-manager {
   background-color: white;
-  padding: 40px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
+  margin: 10px;
+}
+
+@media (min-width: 768px) {
+  .room-manager {
+    padding: 40px;
+    margin: 0;
+  }
 }
 
 .room-manager h1 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #333;
+  font-size: 24px;
+}
+
+@media (min-width: 768px) {
+  .room-manager h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
 }
 
 .mode-selector {
   display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .mode-selector {
+    gap: 10px;
+    margin-bottom: 30px;
+  }
 }
 
 .mode-button {
   flex: 1;
-  padding: 10px;
+  padding: 12px 10px;
   border: 2px solid #ddd;
   background-color: #fff;
   cursor: pointer;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   transition: all 0.2s ease;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .mode-button {
+    padding: 10px;
+    font-size: 16px;
+  }
 }
 
 .mode-button.active {
@@ -43,7 +75,13 @@
 .room-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+}
+
+@media (min-width: 768px) {
+  .room-form {
+    gap: 20px;
+  }
 }
 
 .form-group {
@@ -73,15 +111,24 @@
 }
 
 .submit-button {
-  padding: 12px;
+  padding: 14px;
   background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .submit-button {
+    padding: 12px;
+    font-size: 18px;
+  }
 }
 
 .submit-button:hover {

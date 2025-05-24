@@ -1,37 +1,80 @@
 .game-controls {
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
+  width: 100%;
+  touch-action: manipulation;
+}
+
+@media (min-width: 768px) {
+  .game-controls {
+    margin-top: 20px;
+  }
 }
 
 .controls-grid {
   display: inline-block;
+  max-width: 100%;
 }
 
 .controls-row {
   display: flex;
   justify-content: center;
-  gap: 5px;
-  margin: 5px 0;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+@media (max-width: 480px) {
+  .controls-row {
+    gap: 5px;
+    margin: 5px 0;
+  }
 }
 
 .control-button {
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
+  width: 60px;
+  height: 60px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 28px;
   border: 2px solid #333;
   background-color: #fff;
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
-.control-button:hover:not(:disabled) {
-  background-color: #f0f0f0;
-  transform: scale(1.05);
+@media (min-width: 768px) {
+  .control-button {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 380px) {
+  .control-button {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
+
+@media (hover: hover) {
+  .control-button:hover:not(:disabled) {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+  }
 }
 
 .control-button:active:not(:disabled) {
   transform: scale(0.95);
+  background-color: #e0e0e0;
 }
 
 .control-button:disabled {
@@ -43,4 +86,11 @@
   margin-top: 10px;
   color: #666;
   font-size: 14px;
+  padding: 0 10px;
+}
+
+@media (max-width: 480px) {
+  .turn-message {
+    font-size: 12px;
+  }
 }
