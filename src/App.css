@@ -3,33 +3,80 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-start;
+  padding: 10px;
+  padding-top: max(10px, env(safe-area-inset-top));
+  padding-left: max(10px, env(safe-area-inset-left));
+  padding-right: max(10px, env(safe-area-inset-right));
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .app {
+    justify-content: center;
+    padding: 20px;
+  }
 }
 
 .game-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  .game-container {
+    max-width: 1200px;
+  }
 }
 
 .game-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .game-header h1 {
   color: #333;
   margin-bottom: 10px;
+  font-size: 24px;
+}
+
+@media (min-width: 768px) {
+  .game-header {
+    margin-bottom: 30px;
+  }
+  
+  .game-header h1 {
+    font-size: 32px;
+  }
 }
 
 .winner-announcement {
-  font-size: 24px;
+  font-size: 18px;
   color: #ffc107;
   background-color: #fff3cd;
-  padding: 15px;
+  padding: 10px 15px;
   border-radius: 8px;
   border: 2px solid #ffc107;
   animation: celebration 1s ease-in-out infinite;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .winner-announcement {
+    font-size: 24px;
+    padding: 15px;
+    max-width: none;
+  }
 }
 
 @keyframes celebration {
@@ -39,32 +86,76 @@
 
 .game-content {
   display: flex;
-  gap: 30px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .game-content {
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+  }
 }
 
 .game-main {
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .game-main {
+    flex: 1;
+  }
 }
 
 .game-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (min-width: 768px) {
+  .game-sidebar {
+    gap: 20px;
+    width: auto;
+    min-width: 250px;
+  }
 }
 
 .game-info {
   background-color: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .game-info {
+    padding: 20px;
+  }
 }
 
 .game-info p {
   margin: 5px 0;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .game-info p {
+    font-size: 16px;
+  }
 }
 
 .game-info strong {
@@ -73,9 +164,16 @@
 
 .obstacle-info {
   background-color: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .obstacle-info {
+    padding: 20px;
+  }
 }
 
 .obstacle-info h4 {
@@ -145,7 +243,7 @@
   background-color: #2196F3;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 12px 16px;
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
@@ -153,20 +251,31 @@
   margin: 10px 0;
   display: block;
   width: 100%;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .share-button:hover {
   background-color: #1976D2;
 }
 
-@media (max-width: 768px) {
-  .game-content {
-    flex-direction: column;
-    align-items: center;
+/* Mobile-specific styles for smaller screens */
+@media (max-width: 480px) {
+  .app {
+    padding: 5px;
   }
   
-  .game-sidebar {
-    width: 100%;
-    max-width: 400px;
+  .game-header h1 {
+    font-size: 20px;
+  }
+  
+  .winner-announcement {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+  
+  .game-info p,
+  .obstacle-legend {
+    font-size: 12px;
   }
 }

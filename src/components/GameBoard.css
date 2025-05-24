@@ -1,8 +1,30 @@
+.game-board-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .game-board-container {
+    max-height: 60vh;
+  }
+}
+
 .game-board {
   display: inline-block;
   border: 2px solid #333;
   background-color: #f8f8f8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
 }
 
 .board-row {
@@ -18,11 +40,22 @@
   justify-content: center;
   font-size: 10px;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
-.game-cell:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+@media (hover: hover) {
+  .game-cell:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
+
+.game-cell:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(0.95);
+}
+
 
 .game-cell.has-player {
   border-color: #333;
@@ -31,6 +64,12 @@
 .game-cell.has-trophy {
   background-color: #FFD700 !important;
   font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .game-cell.has-trophy {
+    font-size: 10px;
+  }
 }
 
 .game-cell.is-start {
@@ -43,8 +82,12 @@
 }
 
 .player-piece {
-  width: 10px;
-  height: 10px;
+  width: 40%;
+  height: 40%;
+  min-width: 8px;
+  min-height: 8px;
+  max-width: 15px;
+  max-height: 15px;
   border-radius: 50%;
   background-color: inherit;
   position: relative;
@@ -52,10 +95,12 @@
 
 .turn-indicator {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 6px;
-  height: 6px;
+  top: -20%;
+  right: -20%;
+  width: 40%;
+  height: 40%;
+  min-width: 4px;
+  min-height: 4px;
   background-color: #00FF00;
   border-radius: 50%;
   animation: pulse 1s infinite;
@@ -77,12 +122,46 @@
 }
 
 .obstacle-icon {
-  font-size: 10px;
+  font-size: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 768px) {
+  .game-cell {
+    font-size: 6px;
+    border-width: 0.5px;
+  }
+  
+  .game-cell.has-trophy {
+    font-size: 8px;
+  }
+  
+  .obstacle-icon {
+    font-size: 6px;
+  }
+  
+  .player-piece {
+    width: 60%;
+    height: 60%;
+    border: none;
+  }
+  
+  .turn-indicator {
+    width: 3px;
+    height: 3px;
+    top: -1px;
+    right: -1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .obstacle-icon {
+    font-size: 8px;
+  }
 }
 
 .game-cell.has-obstacle {

@@ -1,3 +1,10 @@
+:root {
+  --sal: env(safe-area-inset-left);
+  --sar: env(safe-area-inset-right);
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,11 +18,38 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f0f0;
+  /* Remove fixed positioning to allow scrolling */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Disable text selection and touch callouts for game UI */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #root {
+  width: 100%;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+}
+
+/* Ensure buttons and interactive elements are touch-friendly */
+button, .button, input, select {
+  min-height: 44px;
+  min-width: 44px;
+  /* Remove iOS styling */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom on input focus on iOS */
+input, select, textarea {
+  font-size: 16px;
+}
+
+/* Improve tap highlight for better feedback */
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
